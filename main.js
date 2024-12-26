@@ -69,6 +69,19 @@ function combo(operand) {
     }
 }
 
+function xor(number1,number2) {
+  let string1 = number1.toString(2);
+  let string2 = number2.toString(2);
+  if (string1.length > string2.length) string2 = string2.padStart(string1.length,"0");
+  else if (string1.length < string2.length) string1 = string1.padStart(string2.length,"0");
+  let string3 = "";
+  for (let i = 0; i < string1.length; i++) {
+    if (string1.charAt(i) != string2.charAt(i)) string3 += "1";
+    else string3 += "0";
+  }
+  return parseInt(string3,2);
+}
+
 function step() {
     let instruction = parseInt(program[pointer]);
     let operand = parseInt(program[pointer + 1]);
@@ -80,7 +93,7 @@ function step() {
       break;
       case 1:
         // bxl
-        b = b ^ operand;
+        b = xor(b,operand);
       break;
       case 2:
         // bst
@@ -94,7 +107,7 @@ function step() {
       break;
       case 4:
         // bxc
-        b = b ^ c;
+        b = xor(b,c);
       break;
       case 5:
         // out
